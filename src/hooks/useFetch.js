@@ -9,10 +9,18 @@ export const getUsers = async () => {
   return res.data
 }
 
-export const postUsers = (user) => {
-  baseAPI.post('/', user)
+export const createUser = (user) => {
+  baseAPI.post(`/users`, user)
 }
 
-export const updateUser = () => {
-  baseAPI.patch()
+export const putUser = (id, user) => {
+  baseAPI.put(`/users/${id}`, user)
+}
+
+export const patchUser = (id, user) => {
+  baseAPI.patch(`/users/${id}`, user)
+}
+
+export const deleteUser = (id) => {
+  baseAPI.delete(`/users/${id}`)
 }

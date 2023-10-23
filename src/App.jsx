@@ -1,4 +1,3 @@
-import { Routes, Route } from 'react-router-dom'
 import './App.scss'
 import Users from './components/Users'
 

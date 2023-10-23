@@ -1,19 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { getUsers } from '../hooks/useFetch'
-import { FaPencil, FaEye, FaTrashCan, FaPlus } from 'react-icons/fa6'
+import { FaEye, FaTrashCan, FaPlus } from 'react-icons/fa6'
 import Loading from './UI/Loading'
 import ModalUser from './UI/ModalUser'
-import { useState } from 'react'
+import CreateUser from './forms/CreateUser'
 
 function Users() {
   const { status, data } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers
   })
-  if (status === 'success') {
-    console.log(data)
-  }
+
   const [modal, setModal] = useState(false)
+  const [create, setCreate] = useState(false)
   const [canEdit, setCanEdit] = useState(false)
   const [sendUser, setSendUser] = useState('')
 
@@ -27,6 +27,7 @@ function Users() {
     e.preventDefault()
     document.body.classList.remove('modal-open')
     setModal(false)
+    setCreate(false)
   }
   const goToEdit = (e) => {
     e.preventDefault()
@@ -36,11 +37,19 @@ function Users() {
     e.preventDefault()
     setModal(false)
   }
+  const onCreate = (e) => {
+    e.preventDefault()
+    document.body.classList.add('modal-open')
+    setCreate(true)
+  }
 
   return (
     <div className="users">
       <div className="users__actions">
-        <button type="button">
+        <button 
+          type="button"
+          onClick={onCreate}
+        >
           <FaPlus /> Add User
         </button>
       </div>
@@ -92,6 +101,13 @@ function Users() {
           }
         </tbody>
       </table>
+      {
+        create ?
+        <CreateUser 
+          create={create}
+          closeModal={closeModal}
+        /> : null
+      }
       {
         modal ? 
         <ModalUser 
